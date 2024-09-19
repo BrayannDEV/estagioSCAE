@@ -1,0 +1,365 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PFS2 - API",
+    "description": "API criada utilizando o padrão REST na disciplina de Programação Fullstack 2",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/"
+    }
+  ],
+  "paths": {
+    "/cliente/": {
+      "post": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "Cadastra um cliente",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/clienteModel"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "Endpoint para retornar todos os Clientes",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "Altera um cliente",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/clienteModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cliente/{id}": {
+      "get": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "Retorna um cliente baseado em um código",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "Deletar um Cliente",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/procedimento/": {
+      "get": {
+        "tags": [
+          "Procedimento"
+        ],
+        "summary": "Endpoint para retornar todos os Procedimentos",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/procedimento/{id}": {
+      "get": {
+        "tags": [
+          "Procedimento"
+        ],
+        "summary": "Retorna um procedimento baseado em um código",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "Autenticacao"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "login": {
+                    "example": "any"
+                  },
+                  "senha": {
+                    "example": "any"
+                  },
+                  "tipo": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "clienteModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 0
+          },
+          "nome": {
+            "type": "string",
+            "example": "Fulano"
+          },
+          "login": {
+            "type": "string",
+            "example": "fulano@email.com"
+          },
+          "senha": {
+            "type": "string",
+            "example": "12345"
+          },
+          "fone": {
+            "type": "string",
+            "example": "18 998888888"
+          }
+        }
+      },
+      "procedimentoModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 0
+          },
+          "nome": {
+            "type": "string",
+            "example": "Mao em Gel"
+          },
+          "descricao": {
+            "type": "string",
+            "example": "pintar unhas da mão em gel"
+          },
+          "tempo": {
+            "type": "number",
+            "example": 30
+          },
+          "valor": {
+            "type": "undefined"
+          }
+        }
+      },
+      "horarioModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 0
+          },
+          "horaInicial": {
+            "type": "number",
+            "example": 0
+          },
+          "horaFinal": {
+            "type": "number",
+            "example": 30
+          },
+          "diaSemana": {
+            "type": "string",
+            "example": "Segunda-feira"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
