@@ -14,10 +14,10 @@ const app = express();
 
 app.use(express.json())
 app.use(cookieParser());
-app.use(cors(cors({
+app.use(cors({
     origin: 'http://localhost:3000', // Substitua pela origem do seu frontend
     credentials: true // Permite o envio de cookies e cabeçalhos de autorização
-})));
+}));
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(outputJson))
 app.use("/cliente", routerClientes);
