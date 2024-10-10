@@ -5,8 +5,8 @@ import HorarioModel from "./models/horarioModel.js";
 
 const doc = {
     info: {
-        title: "PFS2 - API",
-        description: "API criada utilizando o padrão REST na disciplina de Programação Fullstack 2"
+        title: "Estagio - SCAE",
+        description: "Sistema de Controle de Agendamento para Esmalteria"
     },
     host: 'localhost:5000',
     components: {

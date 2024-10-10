@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "PFS2 - API",
-    "description": "API criada utilizando o padrão REST na disciplina de Programação Fullstack 2",
+    "title": "Estagio - SCAE",
+    "description": "Sistema de Controle de Agendamento para Esmalteria",
     "version": "1.0.0"
   },
   "servers": [
