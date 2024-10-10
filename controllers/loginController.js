@@ -1,18 +1,20 @@
 import AuthMiddleware from "../middlewares/authMiddleware.js";
 import ClienteModel from "../models/clienteModel.js";
+import LoginModel from "../models/loginModel.js";
 
 
-export default class AutenticacaoController {
+export default class LoginController {
 
     async token(req, res) {
         try {
-            let {login, senha, tipo} = req.body;
+            if(req.body) {
+                let {login, senha, tipo} = req.body;
+                let loginModel = new LoginModel(login, senha)
 
-            if(login && senha) {
-                //preciso instanciar a modelo e carregar um cliente baseado no login e senha
-                let cliente = new ClienteModel();
-                cliente = await cliente.validarAcesso(login, senha);
-                if(cliente) {
+                if(await loginModel.token()) {
+                    let cliente = new ClienteModel();
+                    cliente = await cliente.obterPorEmailSenha(login, senha);
+                    cliente.senha = "";
                     let auth = new AuthMiddleware();
                     let token = auth.gerarToken(cliente.id, cliente.nome, cliente.login);  //o que faz esse let Token?
 

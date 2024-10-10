@@ -239,10 +239,10 @@
         ]
       }
     },
-    "/auth/token": {
+    "/login/": {
       "post": {
         "tags": [
-          "Autenticacao"
+          "Login"
         ],
         "description": "",
         "responses": {

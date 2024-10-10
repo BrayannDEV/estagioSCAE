@@ -111,21 +111,16 @@ export default class ClienteModel extends BaseModel {
         return result;
     }
 
-    /*async alteracaoParcial() {
+    async obterPorEmailSenha(email, senha) {
 
-        let sql = `update tb_usuario set usu_nome = coalesce(?, usu_nome),
-                                         usu_email = coalesce(?, usu_email),
-                                         usu_ativo = coalesce(?, usu_ativo),
-                                         usu_senha = coalesce(?, usu_senha),
-                                         per_id = coalesce(?, per_id)  
-                    where usu_id = ?`;
-        
-        let valores = [this.#nome, this.#email, this.#ativo, this.#senha, this.#perfil ? this.#perfil.id : null, this.#id];
+        let sql = "select * from tb_cliente where cli_login = ? and cli_senha = ?";
 
-        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+        let valores = [email, senha];
 
-        return result;
-    }*/
+        let row = await banco.ExecutaComando(sql, valores);
+
+        return this.toMap(row);
+    }
 
     toMap(rows) {
         let lista = [];

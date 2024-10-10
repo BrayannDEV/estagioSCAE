@@ -1,7 +1,7 @@
 import express from 'express'
 import routerClientes from './routes/clienteRoute.js'
 import routerProcedimento from './routes/procedimentoRoute.js'
-import routerAutenticacao from './routes/autenticacaoRoute.js'
+import routerLogin from './routes/loginRoute.js'
 import routerHorario from './routes/horarioRoute.js'
 import swaggerUi from 'swagger-ui-express'
 import cookieParser from 'cookie-parser'
@@ -23,7 +23,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(outputJson))
 app.use("/cliente", routerClientes);
 app.use("/procedimento", routerProcedimento);
 app.use("/horario", routerHorario);
-app.use("/auth", routerAutenticacao);
+app.use("/login", routerLogin);
 
 app.listen(5000, function() {
     console.log("servidor web em funcionamento!");
