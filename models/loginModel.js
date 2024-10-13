@@ -38,7 +38,7 @@ export default class LoginModel {
 
     toJSON() {
         return {
-            "email": this.#login,
+            "login": this.#login,
             "senha": this.#senha
         }
     }
