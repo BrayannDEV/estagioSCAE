@@ -72,6 +72,35 @@ export default class ProcedimentoModel extends BaseModel {
         return this.toMap(row);
     }
 
+    async gravar() {
+        
+        let sql = "insert into tb_procedimento (pro_nome, pro_desc, pro_tempo, pro_valor) values (?, ?, ?, ?)";
+        let valores = [this.#nome, this.#descricao, this.#tempo, this.#valor];
+
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+
+    async deletar(id) {
+        let sql = "delete from tb_procedimento where pro_id = ?";
+
+        let valores = [id];
+
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+
+    async alterar() {
+        let sql = "update tb_procedimento set pro_nome = ?, pro_desc = ?, pro_tempo = ?, pro_valor = ? where pro_id = ?";
+        let valores = [this.#nome, this.#descricao, this.#tempo, this.#valor, this.#id];
+
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+
     toMap(rows) {
         let lista = [];
 

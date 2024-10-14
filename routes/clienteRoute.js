@@ -76,27 +76,4 @@ router.delete("/:id", auth.validar, (req, res) => {
 });
 
 
-
-/*router.patch("/", (req, res) => {
-    #swagger.security = [{
-        "bearerAuth": []
-    }] 
-    //#swagger.tags = ['Usuário']
-    //#swagger.summary = 'Realiza a alteração parcial do usuário'
-        #swagger.requestBody = {
-            required: true,
-            content: {
-                "application/json": {
-                    schema: {
-                        $ref: "#/components/schemas/usuarioModel"
-                    }  
-                }
-            }
-        } 
-    
-    ctrl.alterarParcialmente(req, res);
-});
-*/
-
-
 export default router;

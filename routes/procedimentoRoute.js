@@ -26,4 +26,54 @@ router.get("/:id", (req, res) => {
     ctrl.obter(req, res);
 });
 
+router.post("/", (req, res) => [
+    //#swagger.tags = ['Procedimento']
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+    //#swagger.summary = 'Cadastra um procedimento'
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/procedimentoModel"
+                    }  
+                }
+            }
+        } 
+    */
+    ctrl.gravar(req, res)
+]);
+
+router.put("/", auth.validar, (req, res) => {
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+    //#swagger.tags = ['Procedimento']
+    //#swagger.summary = 'Altera um procedimento'
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/procedimentoModel"
+                    }  
+                }
+            }
+        } 
+    */
+    ctrl.alterar(req, res);
+});
+
+router.delete("/:id", auth.validar, (req, res) => {
+    //#swagger.tags = ['Procedimento']
+    //#swagger.summary = 'Deletar um Procedimento'
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+    ctrl.deletar(req, res);
+});
+
+
 export default router;
