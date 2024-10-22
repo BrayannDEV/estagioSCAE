@@ -52,7 +52,7 @@ export default class ProcedimentoModel extends BaseModel {
         this.#nome = nome;
         this.#descricao = descricao;
         this.#tempo = tempo;
-        this.#valor
+        this.#valor = valor;
     }
 
     async listar() {

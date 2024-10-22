@@ -437,7 +437,8 @@
             "example": 30
           },
           "valor": {
-            "type": "undefined"
+            "type": "number",
+            "example": 50
           }
         }
       },

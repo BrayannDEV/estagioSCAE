@@ -12,7 +12,7 @@ const doc = {
     components: {
         schemas: {
             clienteModel: new ClienteModel(0,  "Fulano", "fulano@email.com", "12345", "18 998888888").toJSON(),
-            procedimentoModel: new ProcedimentoModel(0,  "Mao em Gel", "pintar unhas da mão em gel", 30).toJSON(),
+            procedimentoModel: new ProcedimentoModel(0,  "Mao em Gel", "pintar unhas da mão em gel", 30, 50.00).toJSON(),
             horarioModel: new HorarioModel(0, 0, 30, "Segunda-feira").toJSON(),
         },
         securitySchemes:{
