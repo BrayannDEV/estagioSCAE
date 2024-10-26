@@ -16,7 +16,7 @@ export default class LoginController {
                     cliente = await cliente.obterPorEmailSenha(login, senha);
                     cliente.senha = "";
                     let auth = new AuthMiddleware();
-                    let token = auth.gerarToken(cliente.id, cliente.nome, cliente.login);  //o que faz esse let Token?
+                    let token = auth.gerarToken(cliente.id, cliente.nome, cliente.login); 
 
                     res.cookie("token", token, {
                         httpOnly: true

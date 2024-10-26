@@ -30,26 +30,6 @@ export default class ClienteController {
         }
     }
 
-    /*async alterarParcialmente(req, res) {
-        try {
-            let {id, nome, email, senha, ativo, perfil} = req.body;
-            if(id && (nome || email || senha || ativo || (perfil && perfil.id > 0))) {
-
-                let usuarioModel = new UsuarioModel(id, email, nome, ativo, senha);
-
-                if(perfil && perfil.id > 0)
-                    usuarioModel.perfil = new PerfilModel(perfil.id);
-
-                let result = await usuarioModel.alteracaoParcial();
-
-                res.status(200).json({msg: "Alteração parcial realizada com sucesso!"});
-            }
-        }
-        catch(ex) {
-            res.status(500).json({msg: ex.message});
-        }
-    }*/
-
     async alterar(req, res) {
         try {
             let {id, nome, login, senha, fone} = req.body;

@@ -35,6 +35,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.0",
     "swagger-autogen": "^2.23.7",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "use-mask-input": "^3.4.0"
   }
 }
