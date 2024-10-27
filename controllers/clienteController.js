@@ -88,15 +88,32 @@ export default class ClienteController {
             console.log(login)
             console.log(senha)
             console.log(fone)
+            
             if(nome && login && senha && fone) {
+
+                if(nome != ""){                    
+                    if(login != ""){                        
+                        if(senha != ""){                            
+                            if(fone != ""){                                
+                                let cliente = new ClienteModel(0, nome, login, senha, fone);
                 
-                let cliente = new ClienteModel(0, nome, login, senha, fone);
-                
-                let result = await cliente.gravar()
-                if(result)
-                    res.status(201).json({msg: "Cliente gravado com sucesso!"});
-                else
-                    throw new Error("Erro ao inserir o cliente no banco de dados");
+                                let result = await cliente.gravar()
+                                if(result)
+                                    res.status(201).json({msg: "Cliente gravado com sucesso!"});
+                                else
+                                    throw new Error("Erro ao inserir o cliente no banco de dados");
+                            }else{
+                                res.status(400).json({msg: "Telefone não informado"})
+                            }
+                        }else{
+                            res.status(400).json({msg: "Senha não informado"})
+                        }
+                    }else{
+                        res.status(400).json({msg: "Login não informado"})
+                    }
+                }else{
+                    res.status(400).json({msg: "Nome não informado"})
+                }
             }
             else {
                 res.status(400).json({msg: "Parâmetros não informados corretamente!1"});

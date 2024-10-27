@@ -22,7 +22,7 @@ export default class LoginController {
                         httpOnly: true
                     })
 
-                    res.status(200).json({token: token});
+                    res.status(200).json({token: token, cliente: cliente});
                 }
                 else {
                     res.status(404).json({msg: "Credenciais inválidas!"});
