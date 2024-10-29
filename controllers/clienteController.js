@@ -35,19 +35,36 @@ export default class ClienteController {
             let {id, nome, login, senha, fone} = req.body;
             if(id && nome && login && senha && fone) {
 
-                let clienteModel = new ClienteModel(id, nome, login, senha, fone);
-                
-                if(await clienteModel.obter(id)){
-                    let result = await clienteModel.alterar();
+                if(nome != ""){                    
+                    if(login.length >= 6){                        
+                        if(senha.length >= 6){                            
+                            if(fone != ""){
+                                
+                                let clienteModel = new ClienteModel(id, nome, login, senha, fone);
+                                if(await clienteModel.obter(id)){
+                                    let result = await clienteModel.alterar();
 
-                    if(result) {
-                        res.status(200).json({msg: "Alteração realizada com sucesso!"});
+                                    if(result) {
+                                        res.status(200).json({msg: "Alteração realizada com sucesso!"});
+                                    }
+                                    else
+                                        throw new Error("Erro ao executar o comando update!");
+                                }
+                                else{
+                                    res.status(404).json({msg: "Cliente não encontrado para alteração"});
+                                }
+
+                            }else{
+                                res.status(400).json({msg: "Telefone não informado"})
+                            }
+                        }else{
+                            res.status(400).json({msg: "Senha precisa ter mais de 6 caracteres"})
+                        }
+                    }else{
+                        res.status(400).json({msg: "Login não informado"})
                     }
-                    else
-                        throw new Error("Erro ao executar o comando update!");
-                }
-                else{
-                    res.status(404).json({msg: "Cliente não encontrado para alteração"});
+                }else{
+                    res.status(400).json({msg: "Nome não informado"})
                 }
             }
             else{
@@ -92,8 +109,8 @@ export default class ClienteController {
             if(nome && login && senha && fone) {
 
                 if(nome != ""){                    
-                    if(login != ""){                        
-                        if(senha != ""){                            
+                    if(login.length >= 6){                        
+                        if(senha.length >= 6){                            
                             if(fone != ""){                                
                                 let cliente = new ClienteModel(0, nome, login, senha, fone);
                 
@@ -106,7 +123,7 @@ export default class ClienteController {
                                 res.status(400).json({msg: "Telefone não informado"})
                             }
                         }else{
-                            res.status(400).json({msg: "Senha não informado"})
+                            res.status(400).json({msg: "Senha precisa ter mais de 6 caracteres"})
                         }
                     }else{
                         res.status(400).json({msg: "Login não informado"})
