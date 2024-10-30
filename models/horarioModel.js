@@ -46,8 +46,60 @@ export default class HorarioModel extends BaseModel {
         this.#diaSemana = diaSemana;
     }
 
-    //obterDiaSemana -> vai retornar horários do dia
+    async listar() {
+        let sql = "select * from tb_horario";
+        let lista = [];
+        let rows = await banco.ExecutaComando(sql);
 
+        return this.toMap(rows);
+    }
+
+    async gravar() {
+        
+        let sql = "insert into tb_horario (hora_inicial, hora_final, dia_semana) values (?, ?, ?)";
+        let valores = [this.#horaInicial, this.#horaFinal, this.#diaSemana];
+
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+
+    async alterar() {
+        let sql = "update tb_horario set hora_inicial = ?, hora_final = ?, dia_semana = ? where hora_id = ?";
+        let valores = [this.#horaInicial, this.#horaFinal, this.#diaSemana, this.#id];
+
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+
+    async deletar(id) {
+        let sql = "delete from tb_horario where hora_id = ?";
+
+        let valores = [id];
+
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+
+    async obterPorDia(diaSemana) {
+        let sql = "select * from tb_horario where dia_semana = ?";
+        let valores = [diaSemana];
+
+        let row = await banco.ExecutaComando(sql, valores);
+
+        return this.toMap(row);
+    }
+
+    async obter(id) {
+        let sql = "select * from tb_horario where hora_id = ?";
+        let valores = [id];
+
+        let row = await banco.ExecutaComando(sql, valores);
+
+        return this.toMap(row);
+    }
 
 
     toMap(rows) {

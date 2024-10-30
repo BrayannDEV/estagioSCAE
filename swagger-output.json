@@ -347,6 +347,179 @@
         ]
       }
     },
+    "/horario/": {
+      "post": {
+        "tags": [
+          "Horario"
+        ],
+        "summary": "Cadastra um horario para um dia da semana",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/horarioModel"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Horario"
+        ],
+        "summary": "Endpoint para retornar todos os Horarios",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Horario"
+        ],
+        "summary": "Altera um horario",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/horarioModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/horario/{diaSemana}": {
+      "get": {
+        "tags": [
+          "Horario"
+        ],
+        "summary": "Retorna os horários de determinado dia da semana",
+        "description": "",
+        "parameters": [
+          {
+            "name": "diaSemana",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/horario/{id}": {
+      "delete": {
+        "tags": [
+          "Horario"
+        ],
+        "summary": "Deletar um Horario",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/login/": {
       "post": {
         "tags": [
@@ -450,12 +623,12 @@
             "example": 0
           },
           "horaInicial": {
-            "type": "number",
-            "example": 0
+            "type": "string",
+            "example": "08:00:00"
           },
           "horaFinal": {
-            "type": "number",
-            "example": 30
+            "type": "string",
+            "example": "08:30:00"
           },
           "diaSemana": {
             "type": "string",

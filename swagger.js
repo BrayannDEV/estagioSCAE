@@ -13,7 +13,7 @@ const doc = {
         schemas: {
             clienteModel: new ClienteModel(0,  "Fulano", "fulano@email.com", "12345", "18 998888888").toJSON(),
             procedimentoModel: new ProcedimentoModel(0,  "Mao em Gel", "pintar unhas da mão em gel", 30, 50.00).toJSON(),
-            horarioModel: new HorarioModel(0, 0, 30, "Segunda-feira").toJSON(),
+            horarioModel: new HorarioModel( 0, "08:00:00", "08:30:00", "Segunda-feira").toJSON(),
         },
         securitySchemes:{
             bearerAuth: {
