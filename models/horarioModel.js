@@ -115,10 +115,10 @@ export default class HorarioModel extends BaseModel {
             lista.push(horario);
         }
 
-        if(rows.length > 1)
+       // if(rows.length > 1)
             return lista;
-        else
-            return lista[0];
+      //  else
+         //   return lista[0];
     }
 
     toJSON() {
