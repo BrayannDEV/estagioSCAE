@@ -563,6 +563,39 @@
       }
     },
     "/agenda/": {
+      "post": {
+        "tags": [
+          "Agenda"
+        ],
+        "summary": "Cadastra um agendamento",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/agendaModel"
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "Agenda"
@@ -572,6 +605,119 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Agenda"
+        ],
+        "summary": "Altera um agendamento",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/agendaModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agenda/{id}": {
+      "get": {
+        "tags": [
+          "Agenda"
+        ],
+        "summary": "Retorna um agendamento baseado em um código",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Agenda"
+        ],
+        "summary": "Deletar um Agendamento",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -655,6 +801,69 @@
           "diaSemana": {
             "type": "string",
             "example": "Segunda-feira"
+          }
+        }
+      },
+      "agendaModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 0
+          },
+          "data": {
+            "type": "string",
+            "example": "2024/11/15"
+          },
+          "horaInicial": {
+            "type": "string",
+            "example": "08:00:00"
+          },
+          "horaFinal": {
+            "type": "string",
+            "example": "08:30:00"
+          },
+          "cliente": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 1
+              },
+              "nome": {
+                "type": "undefined"
+              },
+              "login": {
+                "type": "undefined"
+              },
+              "senha": {
+                "type": "undefined"
+              },
+              "fone": {
+                "type": "undefined"
+              }
+            }
+          },
+          "procedimento": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": 1
+              },
+              "nome": {
+                "type": "undefined"
+              },
+              "descricao": {
+                "type": "undefined"
+              },
+              "tempo": {
+                "type": "undefined"
+              },
+              "valor": {
+                "type": "undefined"
+              }
+            }
           }
         }
       }

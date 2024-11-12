@@ -2,6 +2,7 @@ import swaggerAutogen from "swagger-autogen";
 import ClienteModel from "./models/clienteModel.js";
 import ProcedimentoModel from "./models/procedimentoModel.js";
 import HorarioModel from "./models/horarioModel.js";
+import AgendaModel from "./models/agendaModel.js";
 
 const doc = {
     info: {
@@ -14,6 +15,7 @@ const doc = {
             clienteModel: new ClienteModel(0,  "Fulano", "fulano@email.com", "12345", "18 998888888").toJSON(),
             procedimentoModel: new ProcedimentoModel(0,  "Mao em Gel", "pintar unhas da mão em gel", 30, 50.00).toJSON(),
             horarioModel: new HorarioModel( 0, "08:00:00", "08:30:00", "Segunda-feira").toJSON(),
+            agendaModel: new AgendaModel(0, "2024/11/15", "08:00:00", "08:30:00", new ClienteModel(1), new ProcedimentoModel(1)).toJSON()
         },
         securitySchemes:{
             bearerAuth: {

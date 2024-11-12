@@ -1,5 +1,7 @@
 import Database from "../db/database.js";
 import BaseModel from "./baseModel.js";
+import ClienteModel from "./clienteModel.js";
+import ProcedimentoModel from "./procedimentoModel.js";
 
 const banco = new Database();
 
@@ -86,7 +88,7 @@ export default class AgendaModel extends BaseModel {
     async gravar() {
         
         let sql = "insert into tb_agenda (age_data, hora_inicial, hora_final, cliente, procedimento) values (?, ?, ?, ?, ?)";
-        let valores = [this.#data, this.#horaInicial, this.#horaFinal, this.#cliente, this.#procedimento];
+        let valores = [this.#data, this.#horaInicial, this.#horaFinal, this.#cliente.id, this.#procedimento.id];
 
         let result = await banco.ExecutaComandoNonQuery(sql, valores);
 
@@ -103,7 +105,7 @@ export default class AgendaModel extends BaseModel {
     }
 
     async alterar() {
-        let sql = "update tb_agenda set age_data = ?, hora_inicial = ?, hora_final = ?, cliente = ?, procedimento = ? where cli_id = ?";
+        let sql = "update tb_agenda set age_data = ?, hora_inicial = ?, hora_final = ?, cliente = ?, procedimento = ? where age_id = ?";
         let valores = [this.#data, this.#horaInicial, this.#horaFinal, this.#cliente, this.#procedimento, this.#id];
 
         let result = await banco.ExecutaComandoNonQuery(sql, valores);
@@ -122,15 +124,13 @@ export default class AgendaModel extends BaseModel {
             agenda.#data = row["age_data"];
             agenda.#horaInicial = row["hora_inicial"];
             agenda.#horaFinal = row["hora_final"];
-            agenda.#cliente = row["cliente"];
-            agenda.#procedimento = row["procedimento"]
+            agenda.#cliente = new ClienteModel(row["cliente"]);
+            agenda.#procedimento = new ProcedimentoModel(row["procedimento"]);
             lista.push(agenda);
         }
 
-        if(rows.length > 1)
-            return lista;
-        else
-            return lista[0];
+        
+        return lista;
     }
 
     toJSON() {
@@ -139,8 +139,8 @@ export default class AgendaModel extends BaseModel {
             "data": this.#data,
             "horaInicial": this.#horaInicial,
             "horaFinal": this.#horaFinal,
-            "cliente": this.#cliente,
-            "procedimento": this.#procedimento,
+            "cliente": this.#cliente.toJSON(),
+            "procedimento": this.#procedimento.toJSON(),
         }
     }
 
