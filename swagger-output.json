@@ -561,6 +561,28 @@
           }
         }
       }
+    },
+    "/agenda/": {
+      "get": {
+        "tags": [
+          "Agenda"
+        ],
+        "summary": "Endpoint para retornar todos os Agendamentos",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {

@@ -3,6 +3,7 @@ import routerClientes from './routes/clienteRoute.js'
 import routerProcedimento from './routes/procedimentoRoute.js'
 import routerLogin from './routes/loginRoute.js'
 import routerHorario from './routes/horarioRoute.js'
+import routerAgenda from './routes/agendaRoute.js'
 import swaggerUi from 'swagger-ui-express'
 import cookieParser from 'cookie-parser'
 import { createRequire } from "module";
@@ -24,6 +25,7 @@ app.use("/cliente", routerClientes);
 app.use("/procedimento", routerProcedimento);
 app.use("/horario", routerHorario);
 app.use("/login", routerLogin);
+app.use("/agenda", routerAgenda);
 
 app.listen(5000, function() {
     console.log("servidor web em funcionamento!");
