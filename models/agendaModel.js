@@ -68,7 +68,7 @@ export default class AgendaModel extends BaseModel {
 
 
     async listar() {
-        let sql = "select * from tb_agenda";
+        let sql = "select * from tb_agenda a inner join tb_cliente c on a.cliente = c.cli_id inner join tb_procedimento p on a.procedimento = p.pro_id";
         let lista = [];
         let rows = await banco.ExecutaComando(sql);
 
@@ -124,8 +124,8 @@ export default class AgendaModel extends BaseModel {
             agenda.#data = row["age_data"];
             agenda.#horaInicial = row["hora_inicial"];
             agenda.#horaFinal = row["hora_final"];
-            agenda.#cliente = new ClienteModel(row["cliente"]);
-            agenda.#procedimento = new ProcedimentoModel(row["procedimento"]);
+            agenda.#cliente = new ClienteModel(row["cli_id"], row["cli_nome"]);
+            agenda.#procedimento = new ProcedimentoModel(row["pro_id"], row["pro_nome"]);
             lista.push(agenda);
         }
 
