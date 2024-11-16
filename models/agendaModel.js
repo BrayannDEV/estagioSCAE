@@ -88,7 +88,7 @@ export default class AgendaModel extends BaseModel {
     async gravar() {
         
         let sql = "insert into tb_agenda (age_data, hora_inicial, hora_final, cliente, procedimento) values (?, ?, ?, ?, ?)";
-        let valores = [this.#data, this.#horaInicial, this.#horaFinal, this.#cliente.id, this.#procedimento.id];
+        let valores = [this.#data, this.#horaInicial, this.#horaFinal, this.#cliente, this.#procedimento];
 
         let result = await banco.ExecutaComandoNonQuery(sql, valores);
 
@@ -98,6 +98,15 @@ export default class AgendaModel extends BaseModel {
     async obter(id) {
         let sql = "select * from tb_agenda where age_id = ?";
         let valores = [id];
+
+        let row = await banco.ExecutaComando(sql, valores);
+
+        return this.toMap(row);
+    }
+
+    async obterPorData(data) {
+        let sql = "select * from tb_agenda where age_data = ?";
+        let valores = [data];
 
         let row = await banco.ExecutaComando(sql, valores);
 
@@ -139,8 +148,8 @@ export default class AgendaModel extends BaseModel {
             "data": this.#data,
             "horaInicial": this.#horaInicial,
             "horaFinal": this.#horaFinal,
-            "cliente": this.#cliente.toJSON(),
-            "procedimento": this.#procedimento.toJSON(),
+            "cliente": this.#cliente,
+            "procedimento": this.#procedimento,
         }
     }
 

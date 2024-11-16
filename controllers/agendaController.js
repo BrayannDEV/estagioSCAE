@@ -30,6 +30,23 @@ export default class AgendaController {
         }
     }
 
+    async obterPorData(req, res) {
+        try{
+            let {data} = req.params;
+            let agenda = new AgendaModel();
+            agenda = await agenda.obterPorData(data);
+            if(agenda) {
+                res.status(200).json(agenda)
+            }
+            else{
+                res.status(404).json({msg: "data não encontrada!"});
+            }
+        }
+        catch(ex) {
+            res.status(500).json({msg: ex.message});
+        }
+    }
+
     async gravar(req, res) {
 
         try {
@@ -41,6 +58,28 @@ export default class AgendaController {
             console.log(procedimento)
             
             if(data && horaInicial && horaFinal && cliente && procedimento) {
+
+                // Convertendo data e horários para objetos Date para fácil comparação 
+                let dataInicial = new Date(`${data}T${horaInicial}:00`);
+                let dataFinal = new Date(`${data}T${horaFinal}:00`);
+                console.log("Data Inicial:", dataInicial);
+                console.log("Data Final:", dataFinal);
+
+                // Buscar agendamentos existentes no mesmo dia 
+                let agendamentosExistentes = await agendaModel.obterPorData(data);
+                console.log("Agendamentos Existentes:", agendamentosExistentes);
+                
+                // Verificar se há conflito de horários 
+                let conflito = agendamentosExistentes.some(agendamento => { 
+                    let inicioExistente = new Date(`${agendamento.data}T${agendamento.horaInicial}:00`); 
+                    let fimExistente = new Date(`${agendamento.data}T${agendamento.horaFinal}:00`); 
+                    console.log("Comparando com:", { inicioExistente, fimExistente });
+                    return (dataInicial < fimExistente && dataFinal > inicioExistente); 
+                }); 
+                
+                if (conflito) { 
+                    return res.status(400).json({ msg: "Conflito de horário com um agendamento existente!" }); 
+                }
 
                 let agenda = new AgendaModel(0, data, horaInicial, horaFinal, cliente, procedimento);
                 let result = await agenda.gravar()

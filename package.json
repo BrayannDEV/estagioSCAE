@@ -33,6 +33,7 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.46",
     "mysql2": "^3.11.0",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1",

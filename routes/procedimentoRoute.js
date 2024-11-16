@@ -7,7 +7,7 @@ const router = express.Router();
 let ctrl = new ProcedimentoController();
 let auth = new AuthMiddleware();
 
-router.get("/", auth.validar, (req, res) => {
+router.get("/", (req, res) => {
 
     // #swagger.tags = ['Procedimento']
     // #swagger.summary = 'Endpoint para retornar todos os Procedimentos'
@@ -26,7 +26,7 @@ router.get("/:id", (req, res) => {
     ctrl.obter(req, res);
 });
 
-router.post("/", (req, res) => [
+router.post("/", auth.validar, (req, res) => [
     //#swagger.tags = ['Procedimento']
     /* #swagger.security = [{
             "bearerAuth": []

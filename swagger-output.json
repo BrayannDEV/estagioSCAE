@@ -190,9 +190,6 @@
           "200": {
             "description": "OK"
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -215,6 +212,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -824,46 +824,12 @@
             "example": "08:30:00"
           },
           "cliente": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number",
-                "example": 1
-              },
-              "nome": {
-                "type": "undefined"
-              },
-              "login": {
-                "type": "undefined"
-              },
-              "senha": {
-                "type": "undefined"
-              },
-              "fone": {
-                "type": "undefined"
-              }
-            }
+            "type": "number",
+            "example": 1
           },
           "procedimento": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number",
-                "example": 1
-              },
-              "nome": {
-                "type": "undefined"
-              },
-              "descricao": {
-                "type": "undefined"
-              },
-              "tempo": {
-                "type": "undefined"
-              },
-              "valor": {
-                "type": "undefined"
-              }
-            }
+            "type": "number",
+            "example": 1
           }
         }
       }
