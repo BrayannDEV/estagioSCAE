@@ -59,27 +59,22 @@ export default class AgendaController {
             
             if(data && horaInicial && horaFinal && cliente && procedimento) {
 
-                // // Convertendo data e horários para objetos Date para fácil comparação 
-                // let dataInicial = new Date(`${data}T${horaInicial}:00`);
-                // let dataFinal = new Date(`${data}T${horaFinal}:00`);
-                // console.log("Data Inicial:", dataInicial);
-                // console.log("Data Final:", dataFinal);
+                // Obtém os agendamentos para a data especificada
+                let agendaModel = new AgendaModel();
+                let agendamentos = await agendaModel.obterPorData(data);
 
-                // // Buscar agendamentos existentes no mesmo dia 
-                // let agendamentosExistentes = await agendaModel.obterPorData(data);
-                // console.log("Agendamentos Existentes:", agendamentosExistentes);
-                
-                // // Verificar se há conflito de horários 
-                // let conflito = agendamentosExistentes.some(agendamento => { 
-                //     let inicioExistente = new Date(`${agendamento.data}T${agendamento.horaInicial}:00`); 
-                //     let fimExistente = new Date(`${agendamento.data}T${agendamento.horaFinal}:00`); 
-                //     console.log("Comparando com:", { inicioExistente, fimExistente });
-                //     return (dataInicial < fimExistente && dataFinal > inicioExistente); 
-                // }); 
-                
-                // if (conflito) { 
-                //     return res.status(400).json({ msg: "Conflito de horário com um agendamento existente!" }); 
-                // }
+                // Verifica se já existe um agendamento no mesmo horário
+                const existeAgendamento = agendamentos.some(agendamento => {
+                    return (
+                        (horaInicial >= agendamento.horaInicial && horaInicial < agendamento.horaFinal) ||
+                        (horaFinal > agendamento.horaInicial && horaFinal <= agendamento.horaFinal) ||
+                        (horaInicial <= agendamento.horaInicial && horaFinal >= agendamento.horaFinal)
+                    );
+                });
+
+                if (existeAgendamento) {
+                    return res.status(400).json({msg: "Já existe um agendamento para esse horário!"});
+                }
 
                 let agenda = new AgendaModel(0, data, horaInicial, horaFinal, cliente, procedimento);
                 let result = await agenda.gravar()
