@@ -59,27 +59,27 @@ export default class AgendaController {
             
             if(data && horaInicial && horaFinal && cliente && procedimento) {
 
-                // Convertendo data e horários para objetos Date para fácil comparação 
-                let dataInicial = new Date(`${data}T${horaInicial}:00`);
-                let dataFinal = new Date(`${data}T${horaFinal}:00`);
-                console.log("Data Inicial:", dataInicial);
-                console.log("Data Final:", dataFinal);
+                // // Convertendo data e horários para objetos Date para fácil comparação 
+                // let dataInicial = new Date(`${data}T${horaInicial}:00`);
+                // let dataFinal = new Date(`${data}T${horaFinal}:00`);
+                // console.log("Data Inicial:", dataInicial);
+                // console.log("Data Final:", dataFinal);
 
-                // Buscar agendamentos existentes no mesmo dia 
-                let agendamentosExistentes = await agendaModel.obterPorData(data);
-                console.log("Agendamentos Existentes:", agendamentosExistentes);
+                // // Buscar agendamentos existentes no mesmo dia 
+                // let agendamentosExistentes = await agendaModel.obterPorData(data);
+                // console.log("Agendamentos Existentes:", agendamentosExistentes);
                 
-                // Verificar se há conflito de horários 
-                let conflito = agendamentosExistentes.some(agendamento => { 
-                    let inicioExistente = new Date(`${agendamento.data}T${agendamento.horaInicial}:00`); 
-                    let fimExistente = new Date(`${agendamento.data}T${agendamento.horaFinal}:00`); 
-                    console.log("Comparando com:", { inicioExistente, fimExistente });
-                    return (dataInicial < fimExistente && dataFinal > inicioExistente); 
-                }); 
+                // // Verificar se há conflito de horários 
+                // let conflito = agendamentosExistentes.some(agendamento => { 
+                //     let inicioExistente = new Date(`${agendamento.data}T${agendamento.horaInicial}:00`); 
+                //     let fimExistente = new Date(`${agendamento.data}T${agendamento.horaFinal}:00`); 
+                //     console.log("Comparando com:", { inicioExistente, fimExistente });
+                //     return (dataInicial < fimExistente && dataFinal > inicioExistente); 
+                // }); 
                 
-                if (conflito) { 
-                    return res.status(400).json({ msg: "Conflito de horário com um agendamento existente!" }); 
-                }
+                // if (conflito) { 
+                //     return res.status(400).json({ msg: "Conflito de horário com um agendamento existente!" }); 
+                // }
 
                 let agenda = new AgendaModel(0, data, horaInicial, horaFinal, cliente, procedimento);
                 let result = await agenda.gravar()
