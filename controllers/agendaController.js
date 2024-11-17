@@ -58,6 +58,31 @@ export default class AgendaController {
             console.log(procedimento)
             
             if(data && horaInicial && horaFinal && cliente && procedimento) {
+                
+                // Obter a data atual 
+                let dataAtual = new Date(); 
+                dataAtual.setHours(0, 0, 0, 0);// Zerar horas, minutos, segundos e milissegundos 
+                
+                // Converter a data do agendamento para um objeto Date 
+                let dataAgendamento = new Date(data); 
+                dataAgendamento.setHours(0, 0, 0, 0); 
+                
+                // Verificar se a data do agendamento é anterior à data atual 
+                if (dataAgendamento < dataAtual) { 
+                    return res.status(400).json({ msg: "Não é possível cadastrar agendamentos em datas anteriores ao dia atual." }); 
+                }
+
+
+                // Convertendo horaInicial e horaFinal para objetos Date para comparação 
+                let horaInicialDate = new Date(`1970-01-01T${horaInicial}:00`); 
+                let horaFinalDate = new Date(`1970-01-01T${horaFinal}:00`); 
+                let horaAbertura = new Date(`1970-01-01T08:00:00`); 
+                let horaFechamento = new Date(`1970-01-01T19:00:00`); 
+                
+                // Verificar se o agendamento está dentro do horário permitido 
+                if (horaInicialDate < horaAbertura || horaFinalDate > horaFechamento) { 
+                    return res.status(400).json({ msg: "Agendamentos só podem ser marcados entre 08:00 e 19:00." }); 
+                }
 
                 // Obtém os agendamentos para a data especificada
                 let agendaModel = new AgendaModel();
