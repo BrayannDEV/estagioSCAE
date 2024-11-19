@@ -61,7 +61,7 @@ export default class AgendaController {
                 
                 // Obter a data atual 
                 let dataAtual = new Date(); 
-                dataAtual.setHours(0, 0, 0, 0);// Zerar horas, minutos, segundos e milissegundos 
+                dataAtual.setHours(0, 0, 0, 0);
                 
                 // Converter a data do agendamento para um objeto Date 
                 let dataAgendamento = new Date(data); 
