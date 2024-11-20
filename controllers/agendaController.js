@@ -1,4 +1,5 @@
 import AgendaModel from "../models/agendaModel.js";
+import HorarioModel from "../models/horarioModel.js";
 
 export default class AgendaController {
 
@@ -58,36 +59,45 @@ export default class AgendaController {
             console.log(procedimento)
             
             if(data && horaInicial && horaFinal && cliente && procedimento) {
+
                 
                 // Obter a data atual 
                 let dataAtual = new Date(); 
                 dataAtual.setHours(0, 0, 0, 0);
-                
                 // Converter a data do agendamento para um objeto Date 
-                let dataAgendamento = new Date(data); 
+                let dataAgendamento = new Date(`${data}T00:00:00`); 
                 dataAgendamento.setHours(0, 0, 0, 0); 
-                
                 // Verificar se a data do agendamento é anterior à data atual 
                 if (dataAgendamento < dataAtual) { 
                     return res.status(400).json({ msg: "Não é possível cadastrar agendamentos em datas anteriores ao dia atual." }); 
                 }
 
 
-                // Convertendo horaInicial e horaFinal para objetos Date para comparação 
-                let horaInicialDate = new Date(`1970-01-01T${horaInicial}:00`); 
-                let horaFinalDate = new Date(`1970-01-01T${horaFinal}:00`); 
-                let horaAbertura = new Date(`1970-01-01T08:00:00`); 
-                let horaFechamento = new Date(`1970-01-01T19:00:00`); 
+                // Transformar data em dia de semana 
+                const diasDaSemana = ["Domingo", "Segunda-feira", "Terca-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sabado"]; 
+                const diaDaSemanaIndex = dataAgendamento.getDay(); 
+                const diaDaSemana = diasDaSemana[diaDaSemanaIndex]; 
+                console.log("Dia da semana:", diaDaSemana); 
+                // Buscar horários permitidos para o dia da semana 
+                const horarioModel = new HorarioModel(); 
+                const horariosPermitidos = await horarioModel.obterPorDia(diaDaSemana); 
+                // Verificar se o horário do agendamento está dentro do permitido 
+                const horaInicialDate = horaInicial; 
+                const horaFinalDate = horaFinal; 
+                const horarioValido = horariosPermitidos.some(horario => { 
+                    const horarioInicialPermitido = horario.horaInicial; 
+                    const horarioFinalPermitido = horario.horaFinal; 
+                    return (horaInicialDate >= horarioInicialPermitido && horaFinalDate <= horarioFinalPermitido); 
+                }); 
                 
-                // Verificar se o agendamento está dentro do horário permitido 
-                if (horaInicialDate < horaAbertura || horaFinalDate > horaFechamento) { 
-                    return res.status(400).json({ msg: "Agendamentos só podem ser marcados entre 08:00 e 19:00." }); 
+                if (!horarioValido) { 
+                    return res.status(400).json({ msg: "O horário do agendamento não está dentro do permitido para o dia selecionado." }); 
                 }
+
 
                 // Obtém os agendamentos para a data especificada
                 let agendaModel = new AgendaModel();
                 let agendamentos = await agendaModel.obterPorData(data);
-
                 // Verifica se já existe um agendamento no mesmo horário
                 const existeAgendamento = agendamentos.some(agendamento => {
                     return (
@@ -100,6 +110,7 @@ export default class AgendaController {
                 if (existeAgendamento) {
                     return res.status(400).json({msg: "Já existe um agendamento para esse horário!"});
                 }
+
 
                 let agenda = new AgendaModel(0, data, horaInicial, horaFinal, cliente, procedimento);
                 let result = await agenda.gravar()
