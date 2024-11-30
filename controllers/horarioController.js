@@ -40,6 +40,25 @@ export default class HorarioController {
             
             if(horaInicial && horaFinal && diaSemana) {
 
+                let horarioConsult = new HorarioModel(); 
+                let horariosExistentes = await horarioConsult.obterPorDia(diaSemana);
+
+                // Verificar se o novo horário proposto está entre algum horário já existente 
+                //const horaInicialDate = new Date(`1970-01-01T${horaInicial}`); 
+                //const horaFinalDate = new Date(`1970-01-01T${horaFinal}`); 
+                
+                const conflito = horariosExistentes.some(horario => { 
+                    return ( 
+                        (horaInicial >= horario.horaInicial && horaInicial < horario.horaFinal) || 
+                        (horaFinal > horario.horaInicial && horaFinal <= horario.horaFinal) || 
+                        (horaInicial <= horario.horaInicial && horaFinal >= horario.horaFinal) 
+                    ); 
+                }); 
+                
+                if (conflito) { 
+                    return res.status(400).json({ msg: "O horário proposto conflita com um horário já existente." });
+                }
+
                 let horario = new HorarioModel(0, horaInicial, horaFinal, diaSemana);
                 let result = await horario.gravar()
                 if(result)

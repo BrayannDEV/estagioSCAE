@@ -82,11 +82,11 @@ export default class AgendaController {
                 const horarioModel = new HorarioModel(); 
                 const horariosPermitidos = await horarioModel.obterPorDia(diaDaSemana); 
                 // Verificar se o horário do agendamento está dentro do permitido 
-                const horaInicialDate = horaInicial; 
-                const horaFinalDate = horaFinal; 
+                const horaInicialDate = new Date(`1970-01-01T${horaInicial}:00`);
+                const horaFinalDate = new Date(`1970-01-01T${horaFinal}:00`);
                 const horarioValido = horariosPermitidos.some(horario => { 
-                    const horarioInicialPermitido = horario.horaInicial; 
-                    const horarioFinalPermitido = horario.horaFinal; 
+                    const horarioInicialPermitido = new Date(`1970-01-01T${horario.horaInicial}`);
+                    const horarioFinalPermitido = new Date(`1970-01-01T${horario.horaFinal}`);
                     return (horaInicialDate >= horarioInicialPermitido && horaFinalDate <= horarioFinalPermitido); 
                 }); 
                 
