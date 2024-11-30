@@ -111,14 +111,19 @@ export default class ClienteController {
                 if(nome != ""){                    
                     if(login.length >= 6){                        
                         if(senha.length >= 6){                            
-                            if(fone != ""){                                
-                                let cliente = new ClienteModel(0, nome, login, senha, fone);
-                
-                                let result = await cliente.gravar()
-                                if(result)
-                                    res.status(201).json({msg: "Cliente gravado com sucesso!"});
-                                else
-                                    throw new Error("Erro ao inserir o cliente no banco de dados");
+                            if(fone != ""){       
+                                let clientelogin = new ClienteModel(); 
+                                let clienteExistente = await clientelogin.obterPorLogin(login); 
+                                if (!clienteExistente) { 
+                                    let cliente = new ClienteModel(0, nome, login, senha, fone);
+                                    let result = await cliente.gravar()
+                                    if(result)
+                                        res.status(201).json({msg: "Cliente gravado com sucesso!"});
+                                    else
+                                        throw new Error("Erro ao inserir o cliente no banco de dados");
+                                }else{
+                                    res.status(400).json({ msg: "Login já existe, por favor escolha outro." }); 
+                                }
                             }else{
                                 res.status(400).json({msg: "Telefone não informado"})
                             }

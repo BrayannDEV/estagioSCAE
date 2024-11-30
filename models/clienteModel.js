@@ -102,6 +102,15 @@ export default class ClienteModel extends BaseModel {
         return this.toMap(row);
     }
 
+    async obterPorLogin(login) {
+        let sql = "select * from tb_cliente where cli_login = ?";
+        let valores = [login];
+
+        let row = await banco.ExecutaComando(sql, valores);
+
+        return this.toMap(row);
+    }
+
     async alterar() {
         let sql = "update tb_cliente set cli_nome = ?, cli_login = ?, cli_senha = ?, cli_fone = ? where cli_id = ?";
         let valores = [this.#nome, this.#login, this.#senha, this.#fone, this.#id];
