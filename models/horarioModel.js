@@ -47,7 +47,7 @@ export default class HorarioModel extends BaseModel {
     }
 
     async listar() {
-        let sql = "select * from tb_horario";
+        let sql = "select * from tb_horario order by dia_semana, hora_inicial";
         let lista = [];
         let rows = await banco.ExecutaComando(sql);
 
