@@ -10,6 +10,7 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const outputJson = require("./swagger-output.json");
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use("/procedimento", routerProcedimento);
 app.use("/horario", routerHorario);
 app.use("/login", routerLogin);
 app.use("/agenda", routerAgenda);
+// Middleware para servir arquivos estáticos 
+app.use(express.static(path.join('/public')));
 
 app.listen(5000, function() {
     console.log("servidor web em funcionamento!");
