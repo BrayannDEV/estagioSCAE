@@ -10,7 +10,12 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const outputJson = require("./swagger-output.json");
 const cors = require('cors');
-const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Definir __dirname 
+const __filename = fileURLToPath(import.meta.url); 
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -21,14 +26,15 @@ app.use(cors({
     credentials: true // Permite o envio de cookies e cabeçalhos de autorização
 }));
 
+// Middleware para servir arquivos estáticos 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(outputJson))
 app.use("/cliente", routerClientes);
 app.use("/procedimento", routerProcedimento);
 app.use("/horario", routerHorario);
 app.use("/login", routerLogin);
 app.use("/agenda", routerAgenda);
-// Middleware para servir arquivos estáticos 
-app.use(express.static(path.join('/public')));
 
 app.listen(5000, function() {
     console.log("servidor web em funcionamento!");
